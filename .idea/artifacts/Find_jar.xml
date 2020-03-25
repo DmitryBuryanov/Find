@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Find:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Find_jar</output-path>
+    <root id="archive" name="Find.jar">
+      <element id="module-output" name="Find" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/args4j/args4j/2.33/args4j-2.33.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
