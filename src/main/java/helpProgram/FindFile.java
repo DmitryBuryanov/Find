@@ -19,8 +19,7 @@ public class FindFile {
     }
 
     public String find() throws Exception {
-        if (fileName == null) throw new Exception("Не указано имя файла");
-        File found = new File(fileName);
+       File found = new File(fileName);
 
         if (directoryName == null) directoryName = knowDirectory().substring(0, knowDirectory().length() - 1);
         File directory = new File(directoryName);
