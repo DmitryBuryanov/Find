@@ -1,9 +1,13 @@
 package helpProgram;
 
 import org.kohsuke.args4j.Argument;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class FindFile {
     @Option(name = "-r")
@@ -13,15 +17,19 @@ public class FindFile {
     @Argument(required = true)
     private String fileName;
 
-    private String knowDirectory() {
-        File directory = new File("Find-1.0-SNAPSHOT-jar-with-dependencies.jar");
-        return (directory.getAbsolutePath().replace("Find-1.0-SNAPSHOT-jar-with-dependencies.jar", ""));
+    public static void main(String[] args) throws Exception {
+        FindFile finder = new FindFile();
+        System.out.println(finder.launch(args));
+    }
+
+    public String knowDirectory() {
+        return System.getProperty("user.dir");
     }
 
     public String find() throws Exception {
        File found = new File(fileName);
 
-        if (directoryName == null) directoryName = knowDirectory().substring(0, knowDirectory().length() - 1);
+        if (directoryName == null) directoryName = knowDirectory();
         File directory = new File(directoryName);
 
         if (!directory.exists()) throw new Exception("Введена неверная директория");
@@ -37,7 +45,19 @@ public class FindFile {
                 searchRealization(file, fileName);
                 if (!searchRealization(file, fileName).equals("File is not found"))
                     return searchRealization(file, fileName);
-            } else if (file.getName().equals(fileName.getName())) return file.getAbsolutePath();
+            } else if (file.getName().equals(fileName.getName())) return Paths.get(file.getAbsolutePath()).toString();
+        }
+        return "File is not found";
+    }
+
+    public String launch(String[] args) throws Exception {
+        FindFile finder = new FindFile();
+        CmdLineParser parser = new CmdLineParser(finder);
+        try {
+            parser.parseArgument(args);
+            return finder.find();
+        } catch (IOException | CmdLineException e) {
+            e.printStackTrace();
         }
         return "File is not found";
     }
