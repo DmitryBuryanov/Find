@@ -27,7 +27,7 @@ public class FindFile {
     }
 
     public String find() throws Exception {
-       File found = new File(fileName);
+        File found = new File(fileName);
 
         if (directoryName == null) directoryName = knowDirectory();
         File directory = new File(directoryName);
@@ -45,17 +45,17 @@ public class FindFile {
                 searchRealization(file, fileName);
                 if (!searchRealization(file, fileName).equals("File is not found"))
                     return searchRealization(file, fileName);
-            } else if (file.getName().equals(fileName.getName())) return Paths.get(file.getAbsolutePath()).toString();
+            } else if (file.getName().equals(fileName.getName()))
+                return Paths.get(file.getAbsolutePath()).toString();
         }
         return "File is not found";
     }
 
     public String launch(String[] args) throws Exception {
-        FindFile finder = new FindFile();
-        CmdLineParser parser = new CmdLineParser(finder);
+        CmdLineParser parser = new CmdLineParser(FindFile.this);
         try {
             parser.parseArgument(args);
-            return finder.find();
+            return FindFile.this.find();
         } catch (IOException | CmdLineException e) {
             e.printStackTrace();
         }
@@ -63,4 +63,3 @@ public class FindFile {
     }
 
 }
-
